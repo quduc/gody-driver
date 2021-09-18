@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { FC } from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
@@ -33,9 +33,15 @@ export const SignIn: FC = () => {
             if (userResponseAPI.__typename !== 'ErrorResponse') {
                 store.saveUser(userResponseAPI.result);
                 store.saveAuth(response.result);
-                navigation.navigate("BookingStack");
+                navigation.dispatch(
+                    CommonActions.reset({
+                        index: 0,
+                        routes: [
+                            { name: 'BookingStack' }
+                        ]
+                    })
+                );
             }
-
         }
         setLoading(false);
     }
