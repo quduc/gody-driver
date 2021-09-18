@@ -8,9 +8,7 @@ import { colors } from '../contants/colors';
 import FastImage from 'react-native-fast-image';
 import constants from '../contants/contants';
 import { DrawerItemProps } from '../types';
-import { GodyPass } from '../screens/godypass/GodyPass';
 import { Settings } from '../screens/settings/Settings';
-import { FreeTrips } from '../screens/freetrips/FreeTrips';
 import { EditAccount } from '../screens/editaccount/EditAccount';
 import { UpdateUserInfo } from '../screens/updateuserinfo/UpdateUserInfo';
 import { SignIn } from '../screens/signin/SignIn';
@@ -52,30 +50,18 @@ const drawerItems: DrawerItemProps[] = [
     },
     {
         "id": 3,
-        "name": "GODY Pass",
-        "screen": "GodyPass",
-        "icon": require('../resources/images/godypass.png')
+        "name": "Trips list",
+        "screen": "Tripslist",
+        "icon": require('../resources/images/car.png')
     },
     {
         "id": 4,
-        "name": "Send a gift",
-        "screen": "SendAGift",
-        "icon": require('../resources/images/gift.png')
-    },
-    {
-        "id": 5,
-        "name": "Free trips",
-        "screen": "FreeTrips",
-        "icon": require('../resources/images/free.png')
-    },
-    {
-        "id": 6,
         "name": "Settings",
         "screen": "Settings",
         "icon": require('../resources/images/settings.png')
     },
     {
-        "id": 7,
+        "id": 5,
         "name": "Sign Out",
         "screen": "SignOut",
         "icon": require('../resources/images/sign-out.png')
@@ -189,18 +175,6 @@ export const RootStack: FC<Props> = observer(() => {
                     component={BookingStack}
                     options={{
                         headerShown: false
-                    }} />
-                <Drawer.Screen
-                    name="GodyPass"
-                    component={GodyPass}
-                    options={{
-                        headerTitle: "GODY Pass",
-                    }} />
-                <Drawer.Screen
-                    name="FreeTrips"
-                    component={FreeTrips}
-                    options={{
-                        headerTitle: "Free Trips",
                     }} />
                 <Drawer.Screen
                     name="Settings"

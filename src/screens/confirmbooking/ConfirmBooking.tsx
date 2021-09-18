@@ -5,7 +5,6 @@ import { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { CustomButton } from '../../components/CustomButton';
-import { CustomCardPayment } from '../../components/CustomCardPayment';
 import { CustomHeaderLeft } from '../../components/CustomHeaderLeft';
 import { CustomText } from '../../components/CustomText';
 import { colors } from '../../contants/colors';
@@ -14,10 +13,8 @@ import { useStore } from '../../store/useStore';
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { MapContainer } from '../mapcontainer/MapContainer';
 import { socket } from '../../socketIO';
-import { User } from '../../types';
 
 import LottieView from 'lottie-react-native';
-import { AddPaymentMethod } from '../../components/AddPaymentMethod';
 
 
 
@@ -32,7 +29,7 @@ export const ConfirmBooking: FC<Props> = observer((props) => {
 
     useEffect(() => {
         navigation.setOptions({
-            headerLeft: () => <CustomHeaderLeft type='goback' onPress={() => navigation.navigate("ChooseCar")} />
+            headerLeft: () => <CustomHeaderLeft type='openDrawer' onPress={() => navigation.openDrawer()} />
         })
     }, [])
 
@@ -105,7 +102,6 @@ export const ConfirmBooking: FC<Props> = observer((props) => {
             <BottomSheet
                 ref={bottomSheetModalRef}
                 index={0}
-                // onChange={() => setIsOpenFullModal(!isOpenFullModal)}
                 snapPoints={snapPoints}>
                 <BottomSheetScrollView contentContainerStyle={{
                     paddingHorizontal: 20,
@@ -114,46 +110,23 @@ export const ConfirmBooking: FC<Props> = observer((props) => {
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                         <FastImage
                             style={{ width: 250, height: 127, marginBottom: 10 }}
-                            source={booking?.car_service.image}
+                            source={require('../../resources/images/godyLuxury.png')}
                             resizeMode="cover"
                         />
                     </View>
                     <View>
                         <View style={styles.bookingInfo}>
                             <View>
-                                <CustomText t2 text={booking?.car_service.name} style={{ color: colors.neutral1 }} />
+                                <CustomText t2 text="GODY Luxury" style={{ color: colors.neutral1 }} />
                                 <CustomText p2 text="Seats:4" style={{ color: colors.neutral2 }} />
-                                <CustomText p2 text={booking?.car_service.description} style={{ color: colors.neutral2 }} />
+                                <CustomText p2 text="Luxury car" style={{ color: colors.neutral2 }} />
+                                <CustomText p2 text="Biển số" style={{ color: colors.neutral2 }} />
+                                <CustomText p2 text="Loại xe" style={{ color: colors.neutral2 }} />
                             </View>
-                            <View>
-                                <CustomText s text={`${booking?.fare}$`} style={{ color: colors.neutral2, textAlign: 'right' }} />
-                                {booking?.promotionCode?.fee && <CustomText t2 text={`-${booking?.promotionCode?.fee}$`} style={{ color: colors.primary1, textAlign: 'right' }} />}
-                                {booking?.promotionCode?.fee
-                                    ? <CustomText t2 text={`= ${booking?.fare! - booking?.promotionCode?.fee!}$`} style={{ color: colors.primary2, textAlign: 'right', fontSize: 20, marginTop: 10 }} />
-                                    : <CustomText t2 text={`= ${booking?.fare}$`} style={{ color: colors.primary2, textAlign: 'right', fontSize: 20, marginTop: 10 }} />
-                                }
 
-                            </View>
                         </View>
-                        {booking?.paymentOption ? (
-                            <CustomCardPayment
-                                cardInfo={booking.paymentOption.cardInfo}
-                                iconRight={require('../../resources/images/forward.png')}
-                                iconLeft={booking.paymentOption.paymentType === "cash" ? require('../../resources/images/logo.png') : require('../../resources/images/visa.png')}
-                                onPress={() => navigation.navigate("ChoosePayment", {
-                                    screen: "ConfirmBooking"
-                                })}
-                            />
-                        ) : (
-                            <AddPaymentMethod
-                                title="Choose payment method"
-                                onPress={() => navigation.navigate("ChoosePayment", {
-                                    screen: "ConfirmBooking"
-                                })}
-                            />
-                        )}
                         <View style={{ width: constants.widthDevice - 40, height: 48, marginTop: 10 }}>
-                            <CustomButton type="primary" title={`Submit`} onPress={onRequestBooking} />
+                            <CustomButton type="primary" title={`Can booking`} onPress={onRequestBooking} />
                         </View>
 
                     </View>
@@ -181,7 +154,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         width: '100%',
-        height: 100,
+        height: 150,
         backgroundColor: colors.white,
         borderRadius: 8,
         shadowColor: "#000",
