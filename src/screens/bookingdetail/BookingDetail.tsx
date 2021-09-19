@@ -16,19 +16,16 @@ interface Props {
     destination?: Location;
     fare?: number;
     onPress?: () => void;
+    onCancel?: () => void;
 }
 export const BookingDetail: FC<Props> = (props) => {
-    const { isOpenFullModal, origin, destination, fare } = props;
+    const { isOpenFullModal, origin, destination, fare, onCancel } = props;
     
    
     return (
         <CustomBackground>
             {isOpenFullModal && <View style={{ height: 50 }} />}
-            <CustomText
-                t2
-                style={{ color: colors.neutral2 }}
-                text="Driver is comming ..."
-            />
+            
             <View style={styles.driverInfo}>
                 <View style={styles.row}>
                     <FastImage
@@ -98,8 +95,13 @@ export const BookingDetail: FC<Props> = (props) => {
             </View>
             <CustomButton
                 type="primary"
-                title="Finish"
+                title="Confirm booking"
                 onPress={props.onPress}
+            />
+            <CustomButton
+                type="light"
+                title="Cancel booking"
+                onPress={props.onCancel}
             />
         </CustomBackground>
     )

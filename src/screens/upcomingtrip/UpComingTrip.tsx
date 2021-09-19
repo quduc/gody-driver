@@ -1,4 +1,4 @@
-import { CommonActions, useNavigation } from '@react-navigation/core';
+import { CommonActions, RouteProp, useNavigation } from '@react-navigation/core';
 import { observer } from 'mobx-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { FC } from 'react';
@@ -14,10 +14,13 @@ import { BookingDetail } from '../bookingdetail/BookingDetail';
 import { CustomButton } from '../../components/CustomButton';
 import FastImage from 'react-native-fast-image';
 import { CustomRatingBar } from '../../components/CustomRatingBar';
+import { socket } from '../../socketIO';
 
 
-interface Props { }
-export const UpComingTrip: FC<Props> = observer(() => {
+interface Props {
+    route: RouteProp<{ params: { tripId: string } }, 'params'>
+}
+export const UpComingTrip: FC<Props> = observer(({ route: { params: { tripId } } }) => {
 
     const store = useStore();
     const { booking } = store;
@@ -32,6 +35,22 @@ export const UpComingTrip: FC<Props> = observer(() => {
         })
     }, [])
 
+    const onConfirmBooking = () => {
+        socket.emit("driverConfirmBooking", {
+            tripId
+        })
+    }
+
+    const onCancel = () => {
+        navigation.dispatch(
+            CommonActions.reset({
+                index: 0,
+                routes: [
+                    { name: 'BookingStack' }
+                ]
+            })
+        );
+    }
     const onRatingDriver = () => {
         setShowModal(true);
         bottomSheetModalRef.current?.close();
@@ -76,7 +95,7 @@ export const UpComingTrip: FC<Props> = observer(() => {
             {showModal && renderWatingModal()}
             <BottomSheet
                 ref={bottomSheetModalRef}
-                index={0}
+                index={1}
                 onChange={() => setIsOpenFullModal(!isOpenFullModal)}
                 snapPoints={snapPoints}>
                 <BottomSheetScrollView contentContainerStyle={{
@@ -87,7 +106,8 @@ export const UpComingTrip: FC<Props> = observer(() => {
                         origin={booking?.origin}
                         destination={booking?.destination}
                         fare={booking?.fare}
-                        onPress={onRatingDriver}
+                        onPress={onConfirmBooking}
+                        onCancel={onCancel}
                     />
                 </BottomSheetScrollView>
             </BottomSheet >

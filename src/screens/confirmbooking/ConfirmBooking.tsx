@@ -38,46 +38,30 @@ export const ConfirmBooking: FC<Props> = observer((props) => {
         bottomSheetModalRef.current?.close();
     }
     const onRequestBooking = () => {
-        socket.emit('customerBooking', {
-            "startLocation": {
-                "name": booking?.origin.description,
-                "longitude": booking?.origin.location.lng,
-                "latitude": booking?.origin.location.lat,
-            },
-            "endLocation": {
-                "name": booking?.destination.description,
-                "longitude": booking?.destination.location.lng,
-                "latitude": booking?.destination.location.lat,
-            },
-            "transport": {
-                "numberOfSeats": 4,
-                "type": booking?.car_service.type === 1 ? 'economy' : (booking?.car_service.type === 2 ? 'primium' : 'luxury'),
-            },
-            "distance": booking?.distance,  //meters
-            "duration": booking?.duration,
-            "paymentOption": {
-                "paymentType": booking?.paymentOption?.paymentType,
-                "paymentAmount": booking?.promotionCode?.fee ? booking?.fare! - booking?.promotionCode?.fee! : booking?.fare,
-                "cardId": booking?.paymentOption?.cardId, // id thẻ nếu thanh toán bằng thẻ
-                "promotionCode": booking?.promotionCode
-            }
-        });
 
-        // socket.on('driverConfirmBookingResponse', (res) => {
-        //     setShowModal(true);
-        //     bottomSheetModalRef.current?.close();
+        socket.emit('updateLocation', {
+            "longitude": 105.795949,
+            "latitude": 20.980691
+        })
+
+        setShowModal(true);
+        bottomSheetModalRef.current?.close();
+        navigation.navigate("UpComingTrip", {
+            "tripId": "6145afba644f2909c8fcfa8c"
+        });
+        // socket.on('customerBooking', (res) => {
         //     if (res) {
-        //         navigation.navigate("UpComingTrip")
+        //         navigation.navigate("UpComingTrip", {
+        //             "tripId": "6145afba644f2909c8fcfa8c"
+        //         });
         //     }
         // });
-        navigation.navigate("UpComingTrip")
-        // onWatingDriverAccept();
     }
 
     const renderWatingModal = () => {
         return (
             <View style={styles.modal}>
-                <CustomText t2 text="Looking for a ride ..." style={{ textAlign: 'center' }} />
+                <CustomText t2 text="Looking for a customer ..." style={{ textAlign: 'center' }} />
                 <LottieView style={{
                     width: constants.widthDevice - 200,
                     height: constants.widthDevice - 200,
