@@ -4,7 +4,7 @@ import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import { colors } from '../../contants/colors';
 import constants from '../../contants/contants';
-import { destination, nearByDrivers, origin } from '../../mockData';
+// import { destination, nearByDrivers, origin } from '../../mockData';
 import { DriverLocation, Location } from '../../types';
 interface Props {
     origin?: Location;
@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const MapContainer: FC<Props> = (props) => {
-    // const { origin, nearByDrivers, destination } = props;
+    const { origin, nearByDrivers, destination } = props;
     var INITIAL_REGION = {
         latitude: origin?.location.lat,
         longitude: origin?.location.lng,
@@ -87,19 +87,19 @@ export const MapContainer: FC<Props> = (props) => {
                 </Marker>
             ))
             }
-            {/* {origin && destination && (
+            {origin && destination && (
                 <MapViewDirections
                     origin={{
-                        latitude:origin.location.lat,
-                        longitude:origin.location.lng
+                        latitude: origin.location.lat,
+                        longitude: origin.location.lng
                     }}
                     destination={{
-                        latitude:destination.location.lat,
-                        longitude:destination.location.lng
+                        latitude: destination.location.lat,
+                        longitude: destination.location.lng
                     }}
                     apikey={constants.distanceMatrixKeyAPI}
                 />
-            )} */}
+            )}
         </MapView>
     )
 }

@@ -15,6 +15,7 @@ import { MapContainer } from '../mapcontainer/MapContainer';
 import { socket } from '../../socketIO';
 
 import LottieView from 'lottie-react-native';
+import { origin } from '../../mockData';
 
 
 
@@ -24,7 +25,7 @@ export const ConfirmBooking: FC<Props> = observer((props) => {
     const { booking } = store;
     const navigation = useNavigation<any>();
     const bottomSheetModalRef = useRef<BottomSheet>(null);
-    const snapPoints = useMemo(() => ['55%', '75%'], []);
+    const snapPoints = useMemo(() => ['55%', '100%'], []);
     const [showModal, setShowModal] = useState<boolean>(false);
 
     useEffect(() => {
@@ -33,10 +34,6 @@ export const ConfirmBooking: FC<Props> = observer((props) => {
         })
     }, [])
 
-    const onWatingDriverAccept = () => {
-        setShowModal(true);
-        bottomSheetModalRef.current?.close();
-    }
     const onRequestBooking = () => {
 
         socket.emit('updateLocation', {
@@ -46,9 +43,12 @@ export const ConfirmBooking: FC<Props> = observer((props) => {
 
         setShowModal(true);
         bottomSheetModalRef.current?.close();
-        navigation.navigate("UpComingTrip", {
-            "tripId": "6145afba644f2909c8fcfa8c"
-        });
+        setTimeout(() => {
+            navigation.navigate("UpComingTrip", {
+                "tripId": "6145afba644f2909c8fcfa8c"
+            });
+        }, 4000);
+
         // socket.on('customerBooking', (res) => {
         //     if (res) {
         //         navigation.navigate("UpComingTrip", {
@@ -65,7 +65,7 @@ export const ConfirmBooking: FC<Props> = observer((props) => {
                 <LottieView style={{
                     width: constants.widthDevice - 200,
                     height: constants.widthDevice - 200,
-                }} source={require('../../resources/images/waiting.json')} autoPlay loop />
+                }} source={require('../../resources/images/findCustomer.json')} autoPlay loop />
                 <CustomButton type="primary" title="Cancel Booking" onPress={() => {
                     setShowModal(false);
                     bottomSheetModalRef.current?.snapTo(0);
@@ -78,7 +78,9 @@ export const ConfirmBooking: FC<Props> = observer((props) => {
     return (
         <View style={styles.container}>
             <View style={showModal ? styles.mapFull : styles.map}>
-                <MapContainer />
+                <MapContainer
+                    origin={origin}
+                />
             </View>
             {
                 showModal && renderWatingModal()
@@ -94,18 +96,18 @@ export const ConfirmBooking: FC<Props> = observer((props) => {
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                         <FastImage
                             style={{ width: 250, height: 127, marginBottom: 10 }}
-                            source={require('../../resources/images/godyLuxury.png')}
+                            source={require('../../resources/images/godyPremium.png')}
                             resizeMode="cover"
                         />
                     </View>
                     <View>
                         <View style={styles.bookingInfo}>
                             <View>
-                                <CustomText t2 text="GODY Luxury" style={{ color: colors.neutral1 }} />
+                                <CustomText t2 text="GODY Premium" style={{ color: colors.neutral1 }} />
                                 <CustomText p2 text="Seats:4" style={{ color: colors.neutral2 }} />
-                                <CustomText p2 text="Luxury car" style={{ color: colors.neutral2 }} />
-                                <CustomText p2 text="Biển số" style={{ color: colors.neutral2 }} />
-                                <CustomText p2 text="Loại xe" style={{ color: colors.neutral2 }} />
+                                <CustomText p2 text="Premium car" style={{ color: colors.neutral2 }} />
+                                <CustomText p2 text="Biển số: 74A: 20739" style={{ color: colors.neutral2 }} />
+                                <CustomText p2 text="Loại xe: Toyota " style={{ color: colors.neutral2 }} />
                             </View>
 
                         </View>

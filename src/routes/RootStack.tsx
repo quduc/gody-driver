@@ -25,6 +25,7 @@ import Payment from '../screens/payment/Payment';
 import { AddFund } from '../screens/addfund/AddFund';
 import { AddCard } from '../screens/addcard/AddCard';
 import { AddPromotionCode } from '../screens/addpromotioncode/AddPromotionCode';
+import { TripsHistory } from '../screens/tripshistory/TripsHistory';
 
 const Drawer = createDrawerNavigator();
 interface Props { };
@@ -223,6 +224,12 @@ export const RootStack: FC<Props> = observer(() => {
                     component={AddPromotionCode}
                     options={{
                         headerTitle: "Add Promotion code",
+                    }} />
+                <Drawer.Screen
+                    name="Tripslist"
+                    component={TripsHistory}
+                    options={{
+                        headerTitle: "Trip list",
                     }} />
             </Drawer.Navigator>
         </NavigationContainer>

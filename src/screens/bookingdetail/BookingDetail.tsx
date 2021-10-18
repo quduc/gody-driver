@@ -19,13 +19,13 @@ interface Props {
     onCancel?: () => void;
 }
 export const BookingDetail: FC<Props> = (props) => {
-    const { isOpenFullModal, origin, destination, fare, onCancel } = props;
-    
-   
+    const { isOpenFullModal, origin, destination, fare, onCancel, onPress } = props;
+
+
     return (
         <CustomBackground>
-            {isOpenFullModal && <View style={{ height: 50 }} />}
-            
+            {/* {isOpenFullModal && <View style={{ height: 50 }} />} */}
+
             <View style={styles.driverInfo}>
                 <View style={styles.row}>
                     <FastImage
@@ -57,14 +57,14 @@ export const BookingDetail: FC<Props> = (props) => {
                     style={{ marginTop: 10 }}
                 />
                 <CustomText
-                    p1
-                    text={`Joined Nov 2020`}
-                    style={{ color: colors.neutral2 }}
+                    t2
+                    text={`Phone: 0916495188`}
+                    style={{ marginTop: 10 }}
                 />
                 <CustomText
-                    t2
-                    text={`Toyota 74A: 20739`}
-                    style={{ color: colors.neutral1 }}
+                    p1
+                    text={`Joined Step 2020`}
+                    style={{ color: colors.neutral2 }}
                 />
             </View>
             <View style={styles.devider} />
@@ -76,32 +76,32 @@ export const BookingDetail: FC<Props> = (props) => {
                 />
                 <CustomTextFieldWithIcon
                     icon={require('../../resources/images/home.png')}
-                    text={origin?.description}
+                    text="Trường THPT Thị xã Quảng Trị"
                 />
                 <CustomTextFieldWithIcon
                     icon={require('../../resources/images/marker.png')}
-                    text={destination?.description}
+                    text={"Khách sạn Mường Thanh Đông Hà"}
                 />
                 <CustomTextFieldWithIcon
                     icon={require('../../resources/images/payment.png')}
-                    text={`${fare}$`}
+                    text={`33.5$`}
                     textBold
                 />
                 <CustomTextFieldWithIcon
                     icon={require('../../resources/images/godypass.png')}
-                    text={`GODY15`}
+                    text={`KMA25`}
                     textBold
                 />
             </View>
             <CustomButton
                 type="primary"
                 title="Confirm booking"
-                onPress={props.onPress}
+                onPress={onPress}
             />
             <CustomButton
                 type="light"
                 title="Cancel booking"
-                onPress={props.onCancel}
+                onPress={onCancel}
             />
         </CustomBackground>
     )

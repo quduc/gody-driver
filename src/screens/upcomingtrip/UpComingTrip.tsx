@@ -14,7 +14,7 @@ import { BookingDetail } from '../bookingdetail/BookingDetail';
 import { CustomButton } from '../../components/CustomButton';
 import FastImage from 'react-native-fast-image';
 import { CustomRatingBar } from '../../components/CustomRatingBar';
-import { socket } from '../../socketIO';
+import { destination, origin } from '../../mockData';
 
 
 interface Props {
@@ -36,9 +36,10 @@ export const UpComingTrip: FC<Props> = observer(({ route: { params: { tripId } }
     }, [])
 
     const onConfirmBooking = () => {
-        socket.emit("driverConfirmBooking", {
-            tripId
-        })
+        // socket.emit("driverConfirmBooking", {
+        //     tripId
+        // })
+        bottomSheetModalRef.current?.snapTo(0)
     }
 
     const onCancel = () => {
@@ -50,10 +51,6 @@ export const UpComingTrip: FC<Props> = observer(({ route: { params: { tripId } }
                 ]
             })
         );
-    }
-    const onRatingDriver = () => {
-        setShowModal(true);
-        bottomSheetModalRef.current?.close();
     }
 
     const renderWatingModal = () => {
@@ -90,7 +87,10 @@ export const UpComingTrip: FC<Props> = observer(({ route: { params: { tripId } }
     return (
         <View style={styles.container}>
             <View style={showModal ? styles.mapFull : styles.map}>
-                <MapContainer />
+                <MapContainer 
+                    origin={origin}
+                    destination={destination}
+                />
             </View>
             {showModal && renderWatingModal()}
             <BottomSheet
